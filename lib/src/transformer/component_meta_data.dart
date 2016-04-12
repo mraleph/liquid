@@ -30,10 +30,10 @@ class ComponentMetaDataExtractor {
     final _AnnotationExtractor extractor = new _AnnotationExtractor(_elements);
     for (final InterfaceType supertype in componentClass.allSupertypes.reversed) {
       if (!supertype.isObject) {
-        supertype.element.node.visitChildren(extractor);
+        supertype.element.computeNode().visitChildren(extractor);
       }
     }
-    componentClass.node.visitChildren(extractor);
+    componentClass.computeNode().visitChildren(extractor);
 
     result = new ComponentMetaData(extractor.properties);
     _cache[componentClass] = result;

@@ -64,7 +64,7 @@ class LinterVisitor extends GeneralizingAstVisitor {
       }
 
       final Expression initializer =
-          (element as PropertyAccessorElement).variable.node.initializer;
+          (element as PropertyAccessorElement).variable.computeNode().initializer;
 
       if (initializer is! MethodInvocation) {
         logger.error(
@@ -208,7 +208,7 @@ class LinterVisitor extends GeneralizingAstVisitor {
   }
 
   bool _isValidComponent(ClassElement component, [bool printErrors = true]) {
-    final ClassDeclaration componentNode = component.node;
+    final ClassDeclaration componentNode = component.computeNode();
     final InterfaceType componentType = component.type;
 
     if (!componentType.isAssignableTo(elements.componentType.substitute4([elements.objectType]))) {
@@ -222,7 +222,7 @@ class LinterVisitor extends GeneralizingAstVisitor {
       return false;
     }
 
-    ConstructorDeclaration constructor = component.node.getConstructor(null);
+    ConstructorDeclaration constructor = component.computeNode().getConstructor(null);
     if (constructor != null) {
       for (final FormalParameter param in constructor.parameters.parameters) {
         if (param is! DefaultFormalParameter) {

@@ -51,7 +51,7 @@ class FactoryTransformer extends Transformer with ResolverTransformer {
     final asset = transform.primaryInput;
     final id = asset.id;
     final lib = resolver.getLibrary(id);
-    final unit = lib.definingCompilationUnit.node;
+    final unit = lib.definingCompilationUnit.computeNode();
 
     final liquidElements = new LiquidElements(resolver);
 
